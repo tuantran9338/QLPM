@@ -10,7 +10,9 @@ namespace QLPM.Model
     {
         [Key]
         public int ID { get; set; }
+        [Required]
         public string USERNAME { get; set; }
+        [Required]
         public string PASSWORD { get; set; }
         public string MAQH { get; set; }
 
