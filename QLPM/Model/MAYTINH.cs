@@ -21,7 +21,7 @@ namespace QLPM.Models
         public int MAMT { get; set; }
         public string TENMT { get; set; }
         public string MADM { get; set; }
-        public string MATT { get; set; }
+        public int MATT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         

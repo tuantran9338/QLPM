@@ -79,23 +79,43 @@ namespace QLPM.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TAIKHOAN",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    USERNAME = table.Column<string>(nullable: true),
+                    PASSWORD = table.Column<string>(nullable: true),
+                    MAQH = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TAIKHOAN", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_TAIKHOAN_QUYENHAN_MAQH",
+                        column: x => x.MAQH,
+                        principalTable: "QUYENHAN",
+                        principalColumn: "MAQH",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DAYMAY",
                 columns: table => new
                 {
                     MADM = table.Column<string>(nullable: false),
                     TENDM = table.Column<string>(nullable: true),
-                    MATT = table.Column<string>(nullable: true),
-                    TRANGTHAIMATT = table.Column<int>(nullable: true)
+                    MATT = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DAYMAY", x => x.MADM);
                     table.ForeignKey(
-                        name: "FK_DAYMAY_TRANGTHAI_TRANGTHAIMATT",
-                        column: x => x.TRANGTHAIMATT,
+                        name: "FK_DAYMAY_TRANGTHAI_MATT",
+                        column: x => x.MATT,
                         principalTable: "TRANGTHAI",
                         principalColumn: "MATT",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -148,8 +168,7 @@ namespace QLPM.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     TENMT = table.Column<string>(nullable: true),
                     MADM = table.Column<string>(nullable: true),
-                    MATT = table.Column<string>(nullable: true),
-                    TRANGTHAIMATT = table.Column<int>(nullable: true)
+                    MATT = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -161,11 +180,11 @@ namespace QLPM.Migrations
                         principalColumn: "MADM",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_MAYTINH_TRANGTHAI_TRANGTHAIMATT",
-                        column: x => x.TRANGTHAIMATT,
+                        name: "FK_MAYTINH_TRANGTHAI_MATT",
+                        column: x => x.MATT,
                         principalTable: "TRANGTHAI",
                         principalColumn: "MATT",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -189,9 +208,9 @@ namespace QLPM.Migrations
                 column: "MAPHONG");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DAYMAY_TRANGTHAIMATT",
+                name: "IX_DAYMAY_MATT",
                 table: "DAYMAY",
-                column: "TRANGTHAIMATT");
+                column: "MATT");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GIANGVIEN_MAQH",
@@ -204,9 +223,14 @@ namespace QLPM.Migrations
                 column: "MADM");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MAYTINH_TRANGTHAIMATT",
+                name: "IX_MAYTINH_MATT",
                 table: "MAYTINH",
-                column: "TRANGTHAIMATT");
+                column: "MATT");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TAIKHOAN_MAQH",
+                table: "TAIKHOAN",
+                column: "MAQH");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -216,6 +240,9 @@ namespace QLPM.Migrations
 
             migrationBuilder.DropTable(
                 name: "MAYTINH");
+
+            migrationBuilder.DropTable(
+                name: "TAIKHOAN");
 
             migrationBuilder.DropTable(
                 name: "GIANGVIEN");

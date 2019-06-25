@@ -15,7 +15,6 @@ namespace QLPM.Models
 
     public partial class LOP
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LOP()
         {
             this.DANGKYTIETHOCs = new HashSet<DANGKYTIETHOC>();
@@ -24,7 +23,6 @@ namespace QLPM.Models
         public string MALOP { get; set; }
         public string TENLOP { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DANGKYTIETHOC> DANGKYTIETHOCs { get; set; }
     }
 }

@@ -15,7 +15,6 @@ namespace QLPM.Models
 
     public partial class DAYMAY
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DAYMAY()
         {
             this.DANGKYTIETHOCs = new HashSet<DANGKYTIETHOC>();
@@ -24,9 +23,8 @@ namespace QLPM.Models
         [Key]
         public string MADM { get; set; }
         public string TENDM { get; set; }
-        public string MATT { get; set; }
+        public int MATT { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DANGKYTIETHOC> DANGKYTIETHOCs { get; set; }
         public virtual ICollection<MAYTINH> MAYTINHs { get; set; }
         public virtual TRANGTHAI TRANGTHAI { get; set; }

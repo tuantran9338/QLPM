@@ -31,6 +31,25 @@ namespace QLPM.Migrations
                     b.ToTable("QUYENHAN");
                 });
 
+            modelBuilder.Entity("QLPM.Model.TAIKHOAN", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("MAQH");
+
+                    b.Property<string>("PASSWORD");
+
+                    b.Property<string>("USERNAME");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MAQH");
+
+                    b.ToTable("TAIKHOAN");
+                });
+
             modelBuilder.Entity("QLPM.Models.DANGKYTIETHOC", b =>
                 {
                     b.Property<int>("ID")
@@ -67,15 +86,13 @@ namespace QLPM.Migrations
                     b.Property<string>("MADM")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("MATT");
+                    b.Property<int>("MATT");
 
                     b.Property<string>("TENDM");
 
-                    b.Property<int?>("TRANGTHAIMATT");
-
                     b.HasKey("MADM");
 
-                    b.HasIndex("TRANGTHAIMATT");
+                    b.HasIndex("MATT");
 
                     b.ToTable("DAYMAY");
                 });
@@ -120,17 +137,15 @@ namespace QLPM.Migrations
 
                     b.Property<string>("MADM");
 
-                    b.Property<string>("MATT");
+                    b.Property<int>("MATT");
 
                     b.Property<string>("TENMT");
-
-                    b.Property<int?>("TRANGTHAIMATT");
 
                     b.HasKey("MAMT");
 
                     b.HasIndex("MADM");
 
-                    b.HasIndex("TRANGTHAIMATT");
+                    b.HasIndex("MATT");
 
                     b.ToTable("MAYTINH");
                 });
@@ -160,6 +175,13 @@ namespace QLPM.Migrations
                     b.ToTable("TRANGTHAI");
                 });
 
+            modelBuilder.Entity("QLPM.Model.TAIKHOAN", b =>
+                {
+                    b.HasOne("QLPM.Model.QUYENHAN", "QUYENHAN")
+                        .WithMany("TAIKHOANs")
+                        .HasForeignKey("MAQH");
+                });
+
             modelBuilder.Entity("QLPM.Models.DANGKYTIETHOC", b =>
                 {
                     b.HasOne("QLPM.Models.DAYMAY", "DAYMAY")
@@ -183,7 +205,8 @@ namespace QLPM.Migrations
                 {
                     b.HasOne("QLPM.Models.TRANGTHAI", "TRANGTHAI")
                         .WithMany("DAYMAYs")
-                        .HasForeignKey("TRANGTHAIMATT");
+                        .HasForeignKey("MATT")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("QLPM.Models.GIANGVIEN", b =>
@@ -201,7 +224,8 @@ namespace QLPM.Migrations
 
                     b.HasOne("QLPM.Models.TRANGTHAI", "TRANGTHAI")
                         .WithMany("MAYTINHs")
-                        .HasForeignKey("TRANGTHAIMATT");
+                        .HasForeignKey("MATT")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
