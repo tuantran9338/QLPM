@@ -22,7 +22,9 @@ namespace QLPM.Models
         }
         [Key]
         public string MAPHONG { get; set; }
-    
+        public string TENPHONG { get; set; }
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DANGKYTIETHOC> DANGKYTIETHOCs { get; set; }
     }

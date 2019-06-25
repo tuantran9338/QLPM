@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using QLPM.Model;
 
 namespace QLPM.DAO
 {
@@ -18,6 +19,8 @@ namespace QLPM.DAO
             public DbSet<TRANGTHAI> TRANGTHAI { get; set; }
             public DbSet<PHONG> PHONG { get; set; }
             public DbSet<DANGKYTIETHOC> DANGKYTIETHOC { get; set; }
+            public DbSet<QLPM.Model.QUYENHAN> QUYENHAN { get; set; }
+            public DbSet<QLPM.Model.TAIKHOAN> TAIKHOAN { get; set; }
 
 
 

@@ -35,7 +35,7 @@ namespace QLPM
                         (resolver as DefaultContractResolver).NamingStrategy = null;
                 });
             services.AddDbContext<DbQLPMContext>(options =>
-           options.UseSqlServer(Configuration.GetConnectionString("DevConnnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("DevConnnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -19,6 +19,18 @@ namespace QLPM.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("QLPM.Model.QUYENHAN", b =>
+                {
+                    b.Property<string>("MAQH")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("TENQH");
+
+                    b.HasKey("MAQH");
+
+                    b.ToTable("QUYENHAN");
+                });
+
             modelBuilder.Entity("QLPM.Models.DANGKYTIETHOC", b =>
                 {
                     b.Property<int>("ID")
@@ -57,9 +69,13 @@ namespace QLPM.Migrations
 
                     b.Property<string>("MATT");
 
+                    b.Property<string>("TENDM");
+
+                    b.Property<int?>("TRANGTHAIMATT");
+
                     b.HasKey("MADM");
 
-                    b.HasIndex("MATT");
+                    b.HasIndex("TRANGTHAIMATT");
 
                     b.ToTable("DAYMAY");
                 });
@@ -71,11 +87,15 @@ namespace QLPM.Migrations
 
                     b.Property<string>("EMAIL");
 
+                    b.Property<string>("MAQH");
+
                     b.Property<string>("SDT");
 
                     b.Property<string>("TEN");
 
                     b.HasKey("MAGV");
+
+                    b.HasIndex("MAQH");
 
                     b.ToTable("GIANGVIEN");
                 });
@@ -104,11 +124,13 @@ namespace QLPM.Migrations
 
                     b.Property<string>("TENMT");
 
+                    b.Property<int?>("TRANGTHAIMATT");
+
                     b.HasKey("MAMT");
 
                     b.HasIndex("MADM");
 
-                    b.HasIndex("MATT");
+                    b.HasIndex("TRANGTHAIMATT");
 
                     b.ToTable("MAYTINH");
                 });
@@ -118,6 +140,8 @@ namespace QLPM.Migrations
                     b.Property<string>("MAPHONG")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("TENPHONG");
+
                     b.HasKey("MAPHONG");
 
                     b.ToTable("PHONG");
@@ -125,8 +149,9 @@ namespace QLPM.Migrations
 
             modelBuilder.Entity("QLPM.Models.TRANGTHAI", b =>
                 {
-                    b.Property<string>("MATT")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("MATT")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("TENTT");
 
@@ -158,7 +183,14 @@ namespace QLPM.Migrations
                 {
                     b.HasOne("QLPM.Models.TRANGTHAI", "TRANGTHAI")
                         .WithMany("DAYMAYs")
-                        .HasForeignKey("MATT");
+                        .HasForeignKey("TRANGTHAIMATT");
+                });
+
+            modelBuilder.Entity("QLPM.Models.GIANGVIEN", b =>
+                {
+                    b.HasOne("QLPM.Model.QUYENHAN", "QUYENHAN")
+                        .WithMany("GIANGVIENs")
+                        .HasForeignKey("MAQH");
                 });
 
             modelBuilder.Entity("QLPM.Models.MAYTINH", b =>
@@ -169,7 +201,7 @@ namespace QLPM.Migrations
 
                     b.HasOne("QLPM.Models.TRANGTHAI", "TRANGTHAI")
                         .WithMany("MAYTINHs")
-                        .HasForeignKey("MATT");
+                        .HasForeignKey("TRANGTHAIMATT");
                 });
 #pragma warning restore 612, 618
         }

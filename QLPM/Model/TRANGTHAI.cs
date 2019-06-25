@@ -22,7 +22,7 @@ namespace QLPM.Models
             this.MAYTINHs = new HashSet<MAYTINH>();
         }
         [Key]
-        public string MATT { get; set; }
+        public int MATT { get; set; }
         public string TENTT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

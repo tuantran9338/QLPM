@@ -4,24 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace QLPM.Migrations
 {
-    public partial class CREATEDATABASE : Migration
+    public partial class createdatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "GIANGVIEN",
-                columns: table => new
-                {
-                    MAGV = table.Column<string>(nullable: false),
-                    TEN = table.Column<string>(nullable: true),
-                    EMAIL = table.Column<string>(nullable: true),
-                    SDT = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GIANGVIEN", x => x.MAGV);
-                });
-
             migrationBuilder.CreateTable(
                 name: "LOP",
                 columns: table => new
@@ -38,7 +24,8 @@ namespace QLPM.Migrations
                 name: "PHONG",
                 columns: table => new
                 {
-                    MAPHONG = table.Column<string>(nullable: false)
+                    MAPHONG = table.Column<string>(nullable: false),
+                    TENPHONG = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,10 +33,23 @@ namespace QLPM.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "QUYENHAN",
+                columns: table => new
+                {
+                    MAQH = table.Column<string>(nullable: false),
+                    TENQH = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QUYENHAN", x => x.MAQH);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TRANGTHAI",
                 columns: table => new
                 {
-                    MATT = table.Column<string>(nullable: false),
+                    MATT = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     TENTT = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -58,18 +58,41 @@ namespace QLPM.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GIANGVIEN",
+                columns: table => new
+                {
+                    MAGV = table.Column<string>(nullable: false),
+                    TEN = table.Column<string>(nullable: true),
+                    EMAIL = table.Column<string>(nullable: true),
+                    SDT = table.Column<string>(nullable: true),
+                    MAQH = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GIANGVIEN", x => x.MAGV);
+                    table.ForeignKey(
+                        name: "FK_GIANGVIEN_QUYENHAN_MAQH",
+                        column: x => x.MAQH,
+                        principalTable: "QUYENHAN",
+                        principalColumn: "MAQH",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DAYMAY",
                 columns: table => new
                 {
                     MADM = table.Column<string>(nullable: false),
-                    MATT = table.Column<string>(nullable: true)
+                    TENDM = table.Column<string>(nullable: true),
+                    MATT = table.Column<string>(nullable: true),
+                    TRANGTHAIMATT = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DAYMAY", x => x.MADM);
                     table.ForeignKey(
-                        name: "FK_DAYMAY_TRANGTHAI_MATT",
-                        column: x => x.MATT,
+                        name: "FK_DAYMAY_TRANGTHAI_TRANGTHAIMATT",
+                        column: x => x.TRANGTHAIMATT,
                         principalTable: "TRANGTHAI",
                         principalColumn: "MATT",
                         onDelete: ReferentialAction.Restrict);
@@ -125,7 +148,8 @@ namespace QLPM.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     TENMT = table.Column<string>(nullable: true),
                     MADM = table.Column<string>(nullable: true),
-                    MATT = table.Column<string>(nullable: true)
+                    MATT = table.Column<string>(nullable: true),
+                    TRANGTHAIMATT = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -137,8 +161,8 @@ namespace QLPM.Migrations
                         principalColumn: "MADM",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_MAYTINH_TRANGTHAI_MATT",
-                        column: x => x.MATT,
+                        name: "FK_MAYTINH_TRANGTHAI_TRANGTHAIMATT",
+                        column: x => x.TRANGTHAIMATT,
                         principalTable: "TRANGTHAI",
                         principalColumn: "MATT",
                         onDelete: ReferentialAction.Restrict);
@@ -165,9 +189,14 @@ namespace QLPM.Migrations
                 column: "MAPHONG");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DAYMAY_MATT",
+                name: "IX_DAYMAY_TRANGTHAIMATT",
                 table: "DAYMAY",
-                column: "MATT");
+                column: "TRANGTHAIMATT");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GIANGVIEN_MAQH",
+                table: "GIANGVIEN",
+                column: "MAQH");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MAYTINH_MADM",
@@ -175,9 +204,9 @@ namespace QLPM.Migrations
                 column: "MADM");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MAYTINH_MATT",
+                name: "IX_MAYTINH_TRANGTHAIMATT",
                 table: "MAYTINH",
-                column: "MATT");
+                column: "TRANGTHAIMATT");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -199,6 +228,9 @@ namespace QLPM.Migrations
 
             migrationBuilder.DropTable(
                 name: "DAYMAY");
+
+            migrationBuilder.DropTable(
+                name: "QUYENHAN");
 
             migrationBuilder.DropTable(
                 name: "TRANGTHAI");

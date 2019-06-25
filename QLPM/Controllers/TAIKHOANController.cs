@@ -6,62 +6,62 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLPM.DAO;
-using QLPM.Models;
+using QLPM.Model;
 
 namespace QLPM.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class TRANGTHAIController : ControllerBase
+    public class TAIKHOANController : ControllerBase
     {
         private readonly DbQLPMContext _context;
 
-        public TRANGTHAIController(DbQLPMContext context)
+        public TAIKHOANController(DbQLPMContext context)
         {
             _context = context;
         }
 
-        // GET: api/TRANGTHAI
+        // GET: api/TAIKHOAN
         [HttpGet]
-        public IEnumerable<TRANGTHAI> GetTRANGTHAI()
+        public IEnumerable<TAIKHOAN> GetTAIKHOAN()
         {
-            return _context.TRANGTHAI;
+            return _context.TAIKHOAN;
         }
 
-        // GET: api/TRANGTHAI/5
+        // GET: api/TAIKHOAN/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetTRANGTHAI([FromRoute] int id)
+        public async Task<IActionResult> GetTAIKHOAN([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var tRANGTHAI = await _context.TRANGTHAI.FindAsync(id);
+            var tAIKHOAN = await _context.TAIKHOAN.FindAsync(id);
 
-            if (tRANGTHAI == null)
+            if (tAIKHOAN == null)
             {
                 return NotFound();
             }
 
-            return Ok(tRANGTHAI);
+            return Ok(tAIKHOAN);
         }
 
-        // PUT: api/TRANGTHAI/5
+        // PUT: api/TAIKHOAN/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTRANGTHAI([FromRoute] int id, [FromBody] TRANGTHAI tRANGTHAI)
+        public async Task<IActionResult> PutTAIKHOAN([FromRoute] int id, [FromBody] TAIKHOAN tAIKHOAN)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != tRANGTHAI.MATT)
+            if (id != tAIKHOAN.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(tRANGTHAI).State = EntityState.Modified;
+            _context.Entry(tAIKHOAN).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +69,7 @@ namespace QLPM.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TRANGTHAIExists(id))
+                if (!TAIKHOANExists(id))
                 {
                     return NotFound();
                 }
@@ -82,45 +82,45 @@ namespace QLPM.Controllers
             return NoContent();
         }
 
-        // POST: api/TRANGTHAI
+        // POST: api/TAIKHOAN
         [HttpPost]
-        public async Task<IActionResult> PostTRANGTHAI([FromBody] TRANGTHAI tRANGTHAI)
+        public async Task<IActionResult> PostTAIKHOAN([FromBody] TAIKHOAN tAIKHOAN)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.TRANGTHAI.Add(tRANGTHAI);
+            _context.TAIKHOAN.Add(tAIKHOAN);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTRANGTHAI", new { id = tRANGTHAI.MATT }, tRANGTHAI);
+            return CreatedAtAction("GetTAIKHOAN", new { id = tAIKHOAN.ID }, tAIKHOAN);
         }
 
-        // DELETE: api/TRANGTHAI/5
+        // DELETE: api/TAIKHOAN/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTRANGTHAI([FromRoute] int id)
+        public async Task<IActionResult> DeleteTAIKHOAN([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var tRANGTHAI = await _context.TRANGTHAI.FindAsync(id);
-            if (tRANGTHAI == null)
+            var tAIKHOAN = await _context.TAIKHOAN.FindAsync(id);
+            if (tAIKHOAN == null)
             {
                 return NotFound();
             }
 
-            _context.TRANGTHAI.Remove(tRANGTHAI);
+            _context.TAIKHOAN.Remove(tAIKHOAN);
             await _context.SaveChangesAsync();
 
-            return Ok(tRANGTHAI);
+            return Ok(tAIKHOAN);
         }
 
-        private bool TRANGTHAIExists(int id)
+        private bool TAIKHOANExists(int id)
         {
-            return _context.TRANGTHAI.Any(e => e.MATT == id);
+            return _context.TAIKHOAN.Any(e => e.ID == id);
         }
     }
 }
